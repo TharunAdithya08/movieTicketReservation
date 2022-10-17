@@ -1,0 +1,18 @@
+-------------------------------------------------
+Name of customer: demo
+Email ID: demo1
+Phone number: 1981829
+Movie: Ponniyin Selvan-1
+Venue: PVR
+Seat no: 6
+City: Chennai
+-------------------------------------------------
+-------------------------------------------------
+Name of customer: demo
+Email ID: demo1
+Phone number: 1981829
+Movie: Ponniyin Selvan-1
+Venue: PVR
+Seat no: 5
+City: Chennai
+-------------------------------------------------
