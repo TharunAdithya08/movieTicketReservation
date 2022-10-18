@@ -64,37 +64,56 @@ public class registration {
 	        {
 	            public void actionPerformed(ActionEvent e)
 	            {
-	            	String name,pwd,user_id,confirm_pwd,phone_no;
-	        		int flagReg = 0;
+	            	String name,pwd,user_id,confirm_pwd,phone_no,query1;
+	        		int flagReg = 0,flag=1;
+	        		
+	        		
 	                name = tf1.getText();
 	                phone_no = tf2.getText();
 	                user_id = tf3.getText();
 	                pwd = tf5.getText();
 	                confirm_pwd = tf6.getText();
-	                if(name.length()!=0 && phone_no.length()!=0 && user_id.length()!=0 && pwd.length()!=0 && confirm_pwd.length()!=0){
-		                if(pwd.equals(confirm_pwd)) {
-		                	try {
-		                		String query = "insert into validate values(\""+name+"\",\""+user_id+"\",\""+phone_no+"\",\""+pwd+"\");";
-		                		stmt.executeUpdate(query);
-		                		System.out.println("Inserted!!");
-		                		login obj = new login(conn,stmt,rs);
-		                		flagReg = 1;
-		                	}
-		                	catch(Exception regE) {
-		                		System.out.println(regE);
-		                		return;
-		                	}
-		                }
-		                else {
-		                	JOptionPane.showMessageDialog(frame,"Passwords do not match!!");
-		                }
-		                
+	                query1 = "select email_id from validate;";
+	                try {
+	                    final ResultSet rs1 =  stmt.executeQuery(query1);
+	                    while(rs1.next()) {
+	                        if(rs1.getString("email_id").equals(user_id))
+	                            flag = 0;
+	                    }
+                    } catch (Exception e2) {
+                       System.out.println(e2);
+                    }
+	                if(flag==1){
+    	                if(name.length()!=0 && phone_no.length()!=0 && user_id.length()!=0 && pwd.length()!=0 && confirm_pwd.length()!=0){
+    		                if(pwd.equals(confirm_pwd)) {
+    		                	try {
+    		                		String query = "insert into validate values(\""+name+"\",\""+user_id+"\",\""+phone_no+"\",\""+pwd+"\");";
+    		                		stmt.executeUpdate(query);
+    		                		System.out.println("Inserted!!");
+    		                		login obj = new login(conn,stmt,rs);
+    		                		flagReg = 1;
+    		                	}
+    		                	catch(Exception regE) {
+    		                		System.out.println(regE);
+    		                		return;
+    		                	}
+    		                }
+    		                else {
+    		                	JOptionPane.showMessageDialog(frame,"Passwords do not match!!");
+    		                }
+    		                
+    	                }
+    	                else {
+    	                	JOptionPane.showMessageDialog(frame,"Empty values not allowed!!");
+    	                }
+    	                if(flagReg==1)
+    	                	frame.dispose();
 	                }
 	                else {
-	                	JOptionPane.showMessageDialog(frame,"Empty values not allowed!!");
+	                    JOptionPane.showMessageDialog(frame,"User already exists!!");
+	                    login obj = new login(conn,stmt,rs);
+	                    frame.dispose();
 	                }
-	                if(flagReg==1)
-	                	frame.dispose();
 	            }
 	        });
 
